@@ -1,0 +1,42 @@
+import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+class ButtonRenderer extends JButton implements TableCellRenderer {
+    public ButtonRenderer() {
+        setText("Edit");
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        return this;
+    }
+}
+
+class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
+    private JButton button;
+    private int editingRow;
+
+    public ButtonEditor(JTable table, DoctorTableModel tableModel, JPanel container, CardLayout cardLayout, DoctorProfilePanel profilePanel) {
+        button = new JButton("Edit");
+        button.addActionListener(e -> {
+            editingRow = table.convertRowIndexToModel(table.getEditingRow());
+            Doctor doctor = tableModel.getFilteredDoctors().get(editingRow);
+            profilePanel.loadDoctorDetails(doctor);
+            cardLayout.show(container, "DoctorProfile");
+            fireEditingStopped();
+        });
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        return button;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return null; // No need to return value
+    }
+}
