@@ -1,0 +1,22 @@
+private void updateDoctorDetails(DoctorTableModel tableModel) {
+    // Similar logic as saveDoctorProfile, but update the existing entry
+    int selectedRow = tableModel.getSelectedRow(); // Add a way to track the selected row
+    if (selectedRow != -1) {
+        Doctor doctor = tableModel.getFilteredDoctors().get(selectedRow);
+        // Update doctor details from the form fields
+        doctor.setName(nameField.getText().trim());
+        doctor.setContact(contactField.getText().trim());
+        doctor.setEmail(emailField.getText().trim());
+        doctor.setAddress(addressField.getText().trim());
+        doctor.setDob(dobPicker.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        doctor.setAge(Integer.parseInt(ageField.getText().trim()));
+        doctor.setDepartment((String) departmentDropdown.getSelectedItem());
+        doctor.setSpecialization((String) specializationDropdown.getSelectedItem());
+        doctor.setStartTime(formatTime((Date) startTimeSpinner.getValue()));
+        doctor.setEndTime(formatTime((Date) endTimeSpinner.getValue()));
+        doctor.setAvailableDays(getSelectedDays());
+        doctor.setConsultationFee(Double.parseDouble(consultationFeeField.getText().trim()));
+        tableModel.fireTableDataChanged();
+        JOptionPane.showMessageDialog(this, "Doctor updated successfully!");
+    }
+}
