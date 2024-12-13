@@ -1,0 +1,17 @@
+public void loadDoctorDetails(Doctor doctor) {
+    nameField.setText(doctor.getName());
+    contactField.setText(doctor.getContact());
+    emailField.setText(doctor.getEmail());
+    addressField.setText(doctor.getAddress());
+    dobPicker.setDate(java.sql.Date.valueOf(doctor.getDob()));
+    ageField.setText(String.valueOf(doctor.getAge()));
+    qualificationField.setText(doctor.getQualification());
+    departmentDropdown.setSelectedItem(doctor.getDepartment());
+    specializationDropdown.setSelectedItem(doctor.getSpecialization());
+    startTimeSpinner.setValue(parseTime(doctor.getStartTime()));
+    endTimeSpinner.setValue(parseTime(doctor.getEndTime()));
+    for (JCheckBox checkBox : dayCheckBoxes) {
+        checkBox.setSelected(doctor.getAvailableDays().contains(checkBox.getText()));
+    }
+    consultationFeeField.setText(String.valueOf(doctor.getConsultationFee()));
+}
